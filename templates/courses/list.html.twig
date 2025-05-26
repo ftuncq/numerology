@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les programmes
+{% endblock %}
+
+{% block body %}
+	<div class="ykzkxt d6i7ks">
+		<div class="d-flex">
+			<div class="w-100">
+				<div class="d-md-flex justify-content-md-between align-items-center spacer-section-checkout">
+					<div class="flex-fill mb-6 mb-md-0">
+						<h1 class="pr-md-6 bkicbc">Produits</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="nt-0 mt-md-n2 mt-lg-n4">
+			<nav>
+				<ul class="nav nav-tabs nav-tabs-bordered">
+					<li class="nav-item x0g3fk">
+						<button class="nav-link active owoe4k" data-bs-toggle="tab" data-bs-target="#my-programs">Mes Programmes</button>
+					</li>
+					<li class="nav-item">
+						<button class="nav-link owoe4k" data-bs-toggle="tab" data-bs-target="#next-programs">Les autres programmes</button>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<div class="wwz44q xfue0z">
+			<div class="xo2a4n">
+				<div class="ixxz17">
+					<div class="tab-content pt-2 mt-2">
+						<div class="tab-pane fade profile-overview active show" id="my-programs">
+							{% set paidPurchasedPrograms = programs|filter(prg => prg in app.user.purchases|filter(p => p.status == constant('App\\Entity\\Purchase::STATUS_PAID'))|map(p => p.program)) %}
+							{% set purchasedPrograms = programs|filter(prg => prg in paidPurchasedPrograms) %}
+							{% set hasAdminAccess = is_granted('ROLE_ADMIN') or is_granted('ROLE_GUEST') %}
+							{% if hasAdminAccess %}
+								{% for prg in programs %}
+									{% include "partials/_program_progress_card.html.twig" %}
+								{% endfor %}
+							{% elseif purchasedPrograms|length > 0 %}
+								{% for prg in purchasedPrograms %}
+									{% include "partials/_program_progress_card.html.twig" %}
+								{% endfor %}
+							{% else %}
+								<h5 class="card-sub-title">Pas de programme acheté</h5>
+							{% endif %}
+						</div>
+						<div class="tab-pane fade profile-overview pt-3" id="next-programs">
+							{% set otherPrograms = programs|filter(prg => prg not in paidPurchasedPrograms) %}
+							{% if not hasAdminAccess and otherPrograms|length > 0 %}
+								{% for prg in otherPrograms %}
+									<article class="mb-6 d-flex align-items-center">
+										<div>
+											<a class="thumb thumb-lg thumb-photo thumb-link" href="{{ path('app_program', {'slug': prg.slug}) }}">
+												<img src="{{ vich_uploader_asset(prg, 'imageFile') }}" alt="{{ prg.name }}" class="thumb-img">
+											</a>
+										</div>
+										<div class="ml-3 minw315">
+											<header class="mb-1">
+												<h1 class="title mb-0 qpguv1">
+													<a class="text-grey-dark text-decoration-none" href="{{ path('app_program', {'slug': prg.slug}) }}">{{ prg.name }}</a>
+												</h1>
+												<ul class="nc80xb tvyx52">
+													<li class="rs8f42">
+														<span>{{ prg.price | amount }}</span>
+													</li>
+													<li class="rs8f42">
+														<span>Cours</span>
+													</li>
+													<li class="rs8f42">
+														<span>{{ nbrCoursesByProgram[prg.id] }}
+															Leçons</span>
+													</li>
+												</ul>
+											</header>
+										</div>
+									</article>
+								{% endfor %}
+							{% else %}
+								<h5 class="card-sub-title">Pas d'autres programmes à venir</h5>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% include "shared/_footer_second.html.twig" %}
+{% endblock %}

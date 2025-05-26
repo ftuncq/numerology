@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ program.slug }}
+{% endblock %}
+
+{% block body %}
+	<section class="show-program mt-0 kcKEGd">
+		<div class="container-programs">
+			<div class="intro-program">
+				<div class="img-program">
+					<img src="{{ vich_uploader_asset(program, 'imageFile') }}" alt="{{ program.name }}" class="program-img">
+				</div>
+				<div class="intro-text-program">
+					<div class="text-start">
+						<header>
+							<div class="payment-terms-program mb-0">
+								<ul class="payment-terms-list">
+									<li class="font-18">{{ program.price | amount }}</li>
+								</ul>
+							</div>
+							<h2 class="title-program font-36 fpTULK">{{ program.name }}</h2>
+						</header>
+						<div class="content-program font-18 fpTULK">
+							{{ program.description | nl2br }}
+						</div>
+						<div class="content-button-go">
+							<div class="wrap-button-go">
+								<a href="{{ path('app_purchase_checkout', {'slug': program.slug })}}" class="show-detail-program font-18">Allez ! Je me lance ! 💪</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="statisfied">
+		<div class="container-programs">
+			<div class="text-start">
+				<header>
+					<h2 class="title-program show-title-program">{{ program.satisfiedTitle }}</h2>
+				</header>
+				<div class="content-program font-18">
+					{{ program.satisfiedContent|raw }}
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="show-program mt-0">
+		<div class="container-programs">
+			<div class="text-start">
+				<header>
+					<h2 class="title-program show-title-program">{{ program.showTitle }}</h2>
+				</header>
+				<div class="content-program font-18">
+					{{ program.showContent|raw }}
+				</div>
+			</div>
+		</div>
+	</section>
+	{% include "partials/_detailed_program.html.twig" %}
+	{% include "partials/_nav_float.html.twig" %}
+	<section class="show-program mt-0">
+		<div class="container-programs">
+			<div class="text-start">
+				<header>
+					<h2 class="title-program show-title-program fw-bold">👍 Testez avant d'acheter !</h2>
+				</header>
+				<div class="content-program font-18">
+					<div>
+						<strong>Les deux premières heures de ce cours sont entièrement gratuites</strong>
+						afin que vous vous fassiez une idée de ma pédagogie et de la façon dont j'aborde les différents sujets !
+						<br>
+						<br>
+						<strong>N'hésitez plus ! Testez ce cours avant de l'acheter 😊</strong>
+					</div>
+					<div class="cjl4i1 opvhv0">
+						<div class="opr6f4">
+							<div class="gab819">
+								<a href="{{ path('app_free_course', {'slug': program.slug}) }}" class="ud1v5m">👀 Montrez-moi les 2 premières heures !</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% include "shared/_footer.html.twig" %}
+{% endblock %}
+
+{% block importmap %}
+	{{ importmap(['app', 'scrollToggle']) }}
+{% endblock %}

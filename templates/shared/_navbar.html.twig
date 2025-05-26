@@ -1,0 +1,77 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+	<div class="container-fluid">
+		<a class="navbar-brand d-flex align-items-center" href="/">
+			<img src="{{ asset('img/logo.png') }}" alt="" class="me-1 vihbpq">
+			{{ appName }}
+		</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor04" aria-controls="navbarColor04" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarColor04">
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item">
+					{% if app.user %}
+						<a class="nav-link" href="{{ path('app_courses_list') }}">🎓 Formations</a>
+					{% else %}
+						<a class="nav-link" href="/">🎓 Formations</a>
+					{% endif %}
+				</li>
+				{% if app.user %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_newsletter') }}">💌 Newsletter</a>
+					</li>
+				{% endif %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('app_about') }}">👨‍💻 Qui suis-je ?</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('app_testimonial') }}">💬 Témoignages</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{ path('app_contact') }}" class="nav-link">
+						📣 Contact
+					</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				{% if app.user %}
+					{% if is_granted('ROLE_ADMIN') %}
+						<li class="nav-item">
+							<a href="{{ path('admin') }}" class="nav-link">Administration</a>
+						</li>
+					{% endif %}
+					<div class="btn-group">
+						<button class="dropdown-toggle btn-dropdown-user" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+							<div class="sc-gravatar">
+								<img src="{{ vich_uploader_asset(app.user.avatar, 'imageFile') }}" class="sc-img-gravatar">
+							</div>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-lg-end py-0">
+							<li class="py-2 px-2">
+								<a class="dropdown-item dropdown-user" href="{{path('app_profile')}}">Profil</a>
+							</li>
+							{% if app.user.purchases is not empty %}
+								<li class="py-2 px-2">
+									<a class="dropdown-item dropdown-user" href="{{path('app_purchase_list')}}">Mes commandes</a>
+								</li>
+							{% endif %}
+							{% if app.user %}
+								<li class="py-2 px-2">
+									<a class="dropdown-item dropdown-user" href="{{path('app_device')}}">Mes appareils</a>
+								</li>
+							{% endif %}
+							<div class="space-between"></div>
+							<li class="py-2 px-2">
+								<a class="dropdown-item dropdown-user color-btn-logout" href="{{ path('app_logout') }}">Se déconnecter</a>
+							</li>
+						</ul>
+					</div>
+				{% else %}
+					<li class="nav-item">
+						<a href="{{ path('app_login') }}" class="btn btn-primary btn-connect">Se connecter</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>

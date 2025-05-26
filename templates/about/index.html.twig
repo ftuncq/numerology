@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Qui suis-je ?
+{% endblock %}
+
+{% block body %}
+	<div class="container pt-5">
+		<section class="about">
+			<div class="container-about">
+				<section class="wrap-about">
+					<div class="img-about">
+						<img src="{{ vich_uploader_asset(trainer, 'imageFile') }}" alt="Qui suis-je ?" class="about-img">
+					</div>
+					<div class="content-about text-center">
+						<header>
+							<h2 class="title-about">Qui suis-je ?</h2>
+						</header>
+						<div class="content-about-me">
+							{{ trainer.description | raw }}
+						</div>
+						<div class="social-about">
+							<div class="social-about-gap">
+								{% for link in trainer.links %}
+									<a href="{{ link.url }}" target="_blank" title="{{ link.type }}" class="social-about-icon">
+										<img src="{{ vich_uploader_asset(link) }}" alt="{{ link.imageName }}">
+									</a>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</section>
+	</div>
+	{% include "shared/_footer.html.twig" %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FAQ
+{% endblock %}
+
+{% block body %}
+	<div class="container pt-5">
+		<div class="js-filter">
+			<div class="f99nak">
+				<div class="mj2t1u">
+					<div class="oblv0b">
+						<div class="vp05nj">
+							<h3 class="y7twg7">Foire aux questions</h3>
+						</div>
+					</div>
+				</div>
+				<div class="vts7ms">
+					<div class="qtodvk">
+						<h2 class="y7begz">
+							Une
+							<span class="v1xuyh">Question ?</span>
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div>
+				{% include "faq/_filter.html.twig" %}
+			</div>
+			<div class="d1oiv1 js-filter-content">
+				{% include "faq/_faqs.html.twig" %}
+			</div>
+			<div class="d-flex flex-row">
+				<div class="col-md-9 px-1 js-filter-pagination">
+					{% include "partials/_pagination.html.twig" %}
+				</div>
+			</div>
+		</div>
+	</div>
+	{% include "shared/_footer_second.html.twig" %}
+{% endblock %}
