@@ -8,14 +8,20 @@ use App\Service\AvatarService;
 use libphonenumber\PhoneNumberUtil;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements FixtureGroupInterface
 {
     public function __construct(protected UserPasswordHasherInterface $passwordHasher, protected AvatarService $avatarService)
     {
     }
 
+    public static function getGroups(): array
+    {
+        return ['user'];
+    }
+    
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
